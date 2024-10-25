@@ -7,7 +7,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Rutas para destinatarios
-router.get('/getDestinatarios', destinatarioController.getDestinatarios);
+router.get('/getDest', destinatarioController.getDestinatarios);
 router.post('/addDest', destinatarioController.addDestinatario);
 router.post('/subirExcel', upload.single('file'), destinatarioController.uploadExcel);
 
