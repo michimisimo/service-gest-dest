@@ -43,7 +43,7 @@ function convertToJson(worksheet) {
     });
 
     return json;
-}
+};
 
 
 async function filtrarSernacActivo() {
@@ -53,7 +53,7 @@ async function filtrarSernacActivo() {
         listaSernac.some(sernac => destinatario.rut == sernac.rut)
     );
     return filtrados;
-}
+};
 
 exports.updateEstadoDestinatarios = async () => {
     try {
@@ -65,4 +65,8 @@ exports.updateEstadoDestinatarios = async () => {
         console.error('Error al actualizar el estado de los destinatarios:', error);
         throw error;
     }
+};
+
+exports.updateInfoDestinatarios = async (rut, data) => {
+    return await destinatarioRepository.updateInfoDestinatario(rut, data);
 };

@@ -11,5 +11,6 @@ router.get('/getDest', destinatarioController.getDestinatarios);
 router.post('/addDest', destinatarioController.addDestinatario);
 router.post('/subirExcel', upload.single('file'), destinatarioController.uploadExcel);
 router.put('/updateEstDest', destinatarioController.updateEstadoDestinatarios);
+router.patch('/updateDestInfo/:rut', destinatarioController.updateInfoDestinatarios);
 
 module.exports = router;

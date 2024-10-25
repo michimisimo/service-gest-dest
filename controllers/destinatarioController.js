@@ -32,3 +32,15 @@ exports.updateEstadoDestinatarios = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.updateInfoDestinatarios = async (req, res) => {
+    const { rut } = req.params;
+    const data = req.body;
+
+    try {
+        await destinatarioService.updateInfoDestinatarios(rut, data);
+        res.status(200).json({ message: 'Información de destinatario actualizada exitosamente.' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
