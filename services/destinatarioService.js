@@ -3,7 +3,7 @@ require('dotenv').config();
 const destinatarioRepository = require('../repositories/destinatarioRepository');
 
 exports.getDestinatarios = async () => {
-    const data = await destinatarioRepository.getAllDestinatarios();
+    const data = await destinatarioRepository.getDestinatariosActivos();
     return data;
 };
 
@@ -44,3 +44,25 @@ function convertToJson(worksheet) {
 
     return json;
 }
+
+
+async function filtrarSernacActivo() {
+    const destinatariosActivos = await exports.getDestinatarios();
+    const listaSernac = await destinatarioRepository.getDestinatariosSernac();
+    const filtrados = destinatariosActivos.filter(destinatario =>
+        listaSernac.some(sernac => destinatario.rut == sernac.rut)
+    );
+    return filtrados;
+}
+
+exports.updateEstadoDestinatarios = async () => {
+    try {
+        const filtrados = await filtrarSernacActivo();
+        await Promise.all(filtrados.map(destinatario =>
+            destinatarioRepository.updateEstadoDestinatario(destinatario.rut)
+        ));
+    } catch (error) {
+        console.error('Error al actualizar el estado de los destinatarios:', error);
+        throw error;
+    }
+};

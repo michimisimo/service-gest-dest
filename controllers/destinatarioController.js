@@ -23,3 +23,12 @@ exports.uploadExcel = async (req, res) => {
     const jsonData = await destinatarioService.uploadExcelAndConvert(req.file.buffer);
     res.json(jsonData);
 };
+
+exports.updateEstadoDestinatarios = async (req, res) => {
+    try {
+        await destinatarioService.updateEstadoDestinatarios();
+        res.status(200).json({ message: 'Estado de destinatarios actualizado exitosamente.' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
