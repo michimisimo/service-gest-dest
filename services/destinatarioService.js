@@ -1,11 +1,6 @@
-const { createClient } = require('@supabase/supabase-js');
 const ExcelJS = require('exceljs');
 require('dotenv').config();
 const destinatarioRepository = require('../repositories/destinatarioRepository');
-
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 exports.getDestinatarios = async () => {
     const data = await destinatarioRepository.getAllDestinatarios();

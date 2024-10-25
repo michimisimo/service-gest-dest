@@ -1,4 +1,3 @@
-// Este archivo es opcional y puede ser usado si necesitas un nivel adicional de abstracción
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
