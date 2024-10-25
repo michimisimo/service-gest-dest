@@ -1,20 +1,19 @@
 const { createClient } = require('@supabase/supabase-js');
 const ExcelJS = require('exceljs');
 require('dotenv').config();
+const destinatarioRepository = require('../repositories/destinatarioRepository');
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 exports.getDestinatarios = async () => {
-    const { data, error } = await supabase.from('destinatario').select('*');
-    if (error) throw new Error(error.message);
+    const data = await destinatarioRepository.getAllDestinatarios();
     return data;
 };
 
 exports.addDestinatario = async (destinatario) => {
-    const { data, error } = await supabase.from('destinatario').insert([destinatario]);
-    if (error) throw new Error(error.message);
+    const data = await destinatarioRepository.insertDestinatario(destinatario);
     return data;
 };
 
