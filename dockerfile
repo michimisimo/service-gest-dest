@@ -1,5 +1,5 @@
 # Usa una imagen base de Node.js
-FROM node:14
+FROM node:18
 
 # Establece el directorio de trabajo
 WORKDIR /usr/src/app
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Configura el comando para iniciar la API
-CMD ["node", "app.js"]
+CMD ["node", "server.js"]
