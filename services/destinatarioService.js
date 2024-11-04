@@ -3,6 +3,7 @@ require('dotenv').config();
 const destinatarioRepository = require('../repositories/destinatarioRepository');
 
 exports.getDestinatarios = async () => {
+    await updateEstadoDestinatarios();
     const data = await destinatarioRepository.getDestinatariosActivos();
     return data;
 };
@@ -45,9 +46,7 @@ function convertToJson(worksheet) {
     return json;
 };
 
-
-async function filtrarSernacActivo() {
-    const destinatariosActivos = await exports.getDestinatarios();
+async function filtrarSernacActivo(destinatariosActivos) {
     const listaSernac = await destinatarioRepository.getDestinatariosSernac();
     const filtrados = destinatariosActivos.filter(destinatario =>
         listaSernac.some(sernac => destinatario.rut == sernac.rut)
@@ -55,9 +54,10 @@ async function filtrarSernacActivo() {
     return filtrados;
 };
 
-exports.updateEstadoDestinatarios = async () => {
+async function updateEstadoDestinatarios() {
     try {
-        const filtrados = await filtrarSernacActivo();
+        const destinatariosActivos = await destinatarioRepository.getDestinatariosActivos();
+        const filtrados = await filtrarSernacActivo(destinatariosActivos);
         await Promise.all(filtrados.map(destinatario =>
             destinatarioRepository.updateEstadoDestinatario(destinatario.rut)
         ));
